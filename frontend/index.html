@@ -668,68 +668,62 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
 /* ════════════════════════════
    VIDEO AD OVERLAY
 ════════════════════════════ */
+/* ════ Portrait video overlay (reel/story style) ════ */
 #videoOverlay{
   position:fixed;inset:0;z-index:10000;
   display:flex;align-items:center;justify-content:center;
-  padding:16px;
-  /* dark tint — consent form slightly visible behind */
-  background:rgba(10,18,38,.88);
-  opacity:1;
-  transition:opacity .5s ease;
+  background:rgba(10,18,38,.9);
+  opacity:1;transition:opacity .5s ease;
 }
 #videoOverlay.vo-out{opacity:0;pointer-events:none;}
 #videoOverlay.vo-gone{display:none;}
+
+/* Portrait card — height-first, width from aspect ratio */
 .vo-card{
-  width:100%;max-width:780px;
-  border-radius:14px;overflow:hidden;
-  box-shadow:0 0 0 1px rgba(255,255,255,.07),
-             0 32px 80px rgba(0,0,0,.75),
-             0 0 0 6px rgba(255,255,255,.04);
+  height:92vh;
+  aspect-ratio:9/16;
+  max-width:90vw;
+  border-radius:16px;overflow:hidden;
   display:flex;flex-direction:column;
   background:#000;
+  box-shadow:0 0 0 1px rgba(255,255,255,.07),
+             0 24px 64px rgba(0,0,0,.8);
 }
 .vo-topbar{
+  flex-shrink:0;
   background:var(--navy-dark);
-  padding:10px 18px;
-  display:flex;align-items:center;gap:12px;
+  padding:10px 16px;
+  display:flex;align-items:center;gap:10px;
 }
 .vo-topbar-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:rgba(255,255,255,.25);flex-shrink:0;
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.3);flex-shrink:0;
 }
 .vo-topbar-title{
-  color:rgba(255,255,255,.9);font-size:12.5px;font-weight:600;
+  color:rgba(255,255,255,.9);font-size:12px;font-weight:600;
   letter-spacing:.04em;font-family:'Inter',sans-serif;
 }
 .vo-topbar-badge{
   margin-left:auto;
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
-  color:rgba(255,255,255,.7);font-size:11px;
-  padding:3px 9px;border-radius:999px;font-family:'Inter',sans-serif;
-  letter-spacing:.04em;
+  color:rgba(255,255,255,.65);font-size:10.5px;
+  padding:2px 8px;border-radius:999px;font-family:'Inter',sans-serif;
 }
+/* Video fills all remaining height */
 .vo-video-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  background:#000;
-  overflow:hidden;
-}
-/* aspect-ratio fallback */
-@supports not (aspect-ratio:16/9){
-  .vo-video-wrap::before{content:'';display:block;padding-top:56.25%;}
-  .vo-video-wrap>*{position:absolute;inset:0;}
+  flex:1;min-height:0;
+  position:relative;background:#000;overflow:hidden;
 }
 #introVideo{
+  position:absolute;inset:0;
   width:100%;height:100%;
-  object-fit:contain;
+  object-fit:cover;   /* fill portrait container — no black bars */
   display:block;
   pointer-events:none;
 }
 .vo-progress-rail{
-  height:4px;
+  flex-shrink:0;height:3px;
   background:rgba(255,255,255,.12);
-  flex-shrink:0;
 }
 .vo-progress-fill{
   height:100%;width:0%;
@@ -737,56 +731,34 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
   transition:width .35s linear;
 }
 .vo-footer{
+  flex-shrink:0;
   background:var(--navy-dark);
-  padding:10px 18px;
+  padding:9px 16px;
   display:flex;align-items:center;justify-content:center;
 }
 .vo-footer-text{
-  color:rgba(255,255,255,.55);font-size:12px;
+  color:rgba(255,255,255,.5);font-size:11.5px;
   font-family:'Noto Sans Devanagari','Inter',sans-serif;
   text-align:center;line-height:1.5;
 }
 .vo-footer-text span{
   display:block;font-family:'Inter',sans-serif;
-  color:rgba(255,255,255,.35);font-size:11px;margin-top:1px;
+  color:rgba(255,255,255,.3);font-size:10.5px;margin-top:1px;
 }
-/* responsive */
-@media(max-width:600px){
-  #videoOverlay{padding:10px;}
-  .vo-card{border-radius:10px;}
-  .vo-topbar{padding:8px 14px;}
-  .vo-topbar-title{font-size:11.5px;}
-  .vo-footer{padding:8px 14px;}
-  .vo-footer-text{font-size:11.5px;}
+/* Mobile: fill full screen edge to edge */
+@media(max-width:520px){
+  #videoOverlay{padding:0;background:rgba(10,18,38,.95);}
+  .vo-card{
+    height:100vh;
+    width:100vw;
+    max-width:100vw;
+    aspect-ratio:unset;
+    border-radius:0;
+  }
 }
-@media(max-width:380px){
+@media(max-width:360px){
   .vo-topbar-badge{display:none;}
-}
-/* Tap-to-play prompt (shown when browser blocks autoplay) */
-#voTapPrompt{
-  display:none;
-  position:absolute;inset:0;
-  align-items:center;justify-content:center;
-  flex-direction:column;gap:14px;
-  background:rgba(0,0,0,.45);
-  cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-}
-#voTapPrompt.show{display:flex;}
-.vo-play-circle{
-  width:72px;height:72px;border-radius:50%;
-  background:rgba(255,255,255,.15);
-  border:2.5px solid rgba(255,255,255,.8);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .15s,background .15s;
-}
-#voTapPrompt:active .vo-play-circle{
-  transform:scale(.93);background:rgba(255,255,255,.25);
-}
-.vo-play-circle svg{width:30px;height:30px;fill:#fff;margin-left:4px;}
-.vo-tap-label{
-  color:#fff;font-size:14px;font-weight:600;
-  font-family:'Inter',sans-serif;letter-spacing:.02em;
+  .vo-topbar-title{font-size:11px;}
 }
 </style>
 </head>
@@ -810,12 +782,6 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
         controlsList="nodownload nofullscreen noremoteplayback"
         preload="auto"
       ></video>
-      <div id="voTapPrompt" onclick="playOnTap()">
-        <div class="vo-play-circle">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
-        <div class="vo-tap-label">Tap to Play</div>
-      </div>
     </div>
     <div class="vo-progress-rail">
       <div class="vo-progress-fill" id="videoProgressBar"></div>
@@ -3580,9 +3546,8 @@ function giveConsent() {
 }
 
 function startVideo() {
-  var video   = document.getElementById('introVideo');
-  var overlay = document.getElementById('videoOverlay');
-  if (!video || !overlay) return;
+  var video = document.getElementById('introVideo');
+  if (!video) return;
 
   video.addEventListener('timeupdate', function() {
     if (video.duration) {
@@ -3593,30 +3558,23 @@ function startVideo() {
 
   video.addEventListener('ended', dismissVideo);
 
-  var p = video.play();
-  if (p !== undefined) {
-    p.catch(function() {
-      /* Browser blocked autoplay — show tap prompt, keep overlay visible */
-      var prompt = document.getElementById('voTapPrompt');
-      if (prompt) prompt.classList.add('show');
-    });
-  }
-}
-
-function playOnTap() {
-  var prompt = document.getElementById('voTapPrompt');
-  var video  = document.getElementById('introVideo');
-  if (prompt) prompt.classList.remove('show');
-  if (video)  video.play();
+  /* Start muted — guaranteed to autoplay on every browser/device.
+     Immediately attempt unmute; succeeds on desktop and most mobile. */
+  video.muted = true;
+  video.play().then(function() {
+    video.muted = false;
+  }).catch(function() {
+    /* Play failed entirely (very rare) — still keep overlay, try unmuted */
+    video.muted = false;
+    video.play().catch(function() {});
+  });
 }
 
 function dismissVideo() {
   var overlay = document.getElementById('videoOverlay');
   if (!overlay || overlay.classList.contains('vo-out')) return;
   overlay.classList.add('vo-out');
-  setTimeout(function() {
-    overlay.classList.add('vo-gone');
-  }, 520);
+  setTimeout(function() { overlay.classList.add('vo-gone'); }, 520);
 }
 
 function checkConsent() {
