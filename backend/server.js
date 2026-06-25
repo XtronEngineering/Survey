@@ -129,7 +129,7 @@ async function insertSurveyResponse(payload) {
 // CORS MIDDLEWARE
 // ════════════════════════════
 const corsOptions = {
-  origin: ['https://xtronmsmesurvey.netlify.app', 'http://localhost:3000', 'http://localhost:3001'],
+  origin: ['https://xtronmsmesurvey.vercel.app', 'https://xtronmsmesurvey.netlify.app', 'http://localhost:3000', 'http://localhost:3001'],
   methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
@@ -281,7 +281,7 @@ app.listen(PORT, () => {
   console.log(`✓ Supabase connected: ${supabaseUrl}`);
   console.log(`✓ API endpoint: /api/survey/submit`);
   console.log(`✓ Health check: / or /api/health`);
-  console.log(`✓ CORS enabled for: https://xtronmsmesurvey.netlify.app`);
+  console.log(`✓ CORS enabled for: https://xtronmsmesurvey.vercel.app, https://xtronmsmesurvey.netlify.app`);
 });
 
 module.exports = {
