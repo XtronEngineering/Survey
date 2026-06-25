@@ -1,13 +1,13 @@
 [[headers]]
-  for = "/*.MOV"
+  for = "/*.MP4"
   [headers.values]
-    Content-Type = "video/quicktime"
+    Content-Type = "video/mp4"
     Accept-Ranges = "bytes"
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/*.mov"
+  for = "/*.mp4"
   [headers.values]
-    Content-Type = "video/quicktime"
+    Content-Type = "video/mp4"
     Accept-Ranges = "bytes"
     Cache-Control = "public, max-age=31536000, immutable"
