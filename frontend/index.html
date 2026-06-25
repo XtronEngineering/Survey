@@ -762,6 +762,32 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
 @media(max-width:380px){
   .vo-topbar-badge{display:none;}
 }
+/* Tap-to-play prompt (shown when browser blocks autoplay) */
+#voTapPrompt{
+  display:none;
+  position:absolute;inset:0;
+  align-items:center;justify-content:center;
+  flex-direction:column;gap:14px;
+  background:rgba(0,0,0,.45);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+#voTapPrompt.show{display:flex;}
+.vo-play-circle{
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  border:2.5px solid rgba(255,255,255,.8);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .15s,background .15s;
+}
+#voTapPrompt:active .vo-play-circle{
+  transform:scale(.93);background:rgba(255,255,255,.25);
+}
+.vo-play-circle svg{width:30px;height:30px;fill:#fff;margin-left:4px;}
+.vo-tap-label{
+  color:#fff;font-size:14px;font-weight:600;
+  font-family:'Inter',sans-serif;letter-spacing:.02em;
+}
 </style>
 </head>
 <body>
@@ -784,6 +810,12 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
         controlsList="nodownload nofullscreen noremoteplayback"
         preload="auto"
       ></video>
+      <div id="voTapPrompt" onclick="playOnTap()">
+        <div class="vo-play-circle">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vo-tap-label">Tap to Play</div>
+      </div>
     </div>
     <div class="vo-progress-rail">
       <div class="vo-progress-fill" id="videoProgressBar"></div>
@@ -3561,10 +3593,21 @@ function startVideo() {
 
   video.addEventListener('ended', dismissVideo);
 
-  video.play().catch(function() {
-    /* Autoplay blocked by browser — dismiss overlay so survey isn't stuck */
-    dismissVideo();
-  });
+  var p = video.play();
+  if (p !== undefined) {
+    p.catch(function() {
+      /* Browser blocked autoplay — show tap prompt, keep overlay visible */
+      var prompt = document.getElementById('voTapPrompt');
+      if (prompt) prompt.classList.add('show');
+    });
+  }
+}
+
+function playOnTap() {
+  var prompt = document.getElementById('voTapPrompt');
+  var video  = document.getElementById('introVideo');
+  if (prompt) prompt.classList.remove('show');
+  if (video)  video.play();
 }
 
 function dismissVideo() {
