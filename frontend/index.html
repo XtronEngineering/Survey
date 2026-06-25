@@ -3551,22 +3551,23 @@ function startVideo() {
 
   video.addEventListener('timeupdate', function() {
     if (video.duration) {
-      var pct = (video.currentTime / video.duration) * 100;
-      document.getElementById('videoProgressBar').style.width = pct + '%';
+      document.getElementById('videoProgressBar').style.width =
+        (video.currentTime / video.duration * 100) + '%';
     }
   });
 
   video.addEventListener('ended', dismissVideo);
 
-  /* Start muted — guaranteed to autoplay on every browser/device.
-     Immediately attempt unmute; succeeds on desktop and most mobile. */
-  video.muted = true;
-  video.play().then(function() {
-    video.muted = false;
-  }).catch(function() {
-    /* Play failed entirely (very rare) — still keep overlay, try unmuted */
-    video.muted = false;
-    video.play().catch(function() {});
+  /* Try with sound first. If the browser blocks it (autoplay policy),
+     fall back to muted — which is guaranteed to play on every browser.
+     Never change muted state after play() starts — that pauses the video. */
+  video.muted = false;
+  video.play().catch(function() {
+    video.muted = true;
+    video.play().catch(function() {
+      /* Absolute last resort — dismiss so user isn't stuck */
+      dismissVideo();
+    });
   });
 }
 
