@@ -765,7 +765,7 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
 <body>
 
 <!-- ═══ VIDEO AD OVERLAY ═══ -->
-<div id="videoOverlay" class="vo-gone">
+<div id="videoOverlay">
   <div class="vo-card">
     <div class="vo-topbar">
       <div class="vo-topbar-dot"></div>
@@ -776,6 +776,8 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
       <video
         id="introVideo"
         src="IMG_0689.MP4"
+        autoplay
+        muted
         playsinline
         webkit-playsinline
         disablePictureInPicture
@@ -3545,44 +3547,36 @@ function giveConsent() {
   }
 }
 
-function setupVideoTrigger() {
+function startVideo() {
   var video   = document.getElementById('introVideo');
   var overlay = document.getElementById('videoOverlay');
   if (!video || !overlay) return;
 
-  /* Wire progress bar and end handler once */
+  /* Progress bar */
   video.addEventListener('timeupdate', function() {
     if (video.duration) {
       document.getElementById('videoProgressBar').style.width =
         (video.currentTime / video.duration * 100) + '%';
     }
   });
+
+  /* Dismiss when video ends */
   video.addEventListener('ended', dismissVideo);
 
-  /* Wait for the user's very first tap/click on the page.
-     The consent form is visible and they will naturally touch it.
-     That touch IS the user gesture — we catch it in capture phase,
-     prevent it reaching the consent form, show the video overlay,
-     and play with FULL SOUND. Browsers always allow sound here
-     because we are executing inside a real user-gesture event. */
-  function onFirstGesture(e) {
-    e.stopImmediatePropagation();
-    if (e.cancelable) e.preventDefault();
-
-    /* Show the overlay */
-    overlay.classList.remove('vo-gone');
-
-    /* Play with sound — guaranteed inside a gesture handler */
+  /* Video autoplays muted via HTML attributes (works on every device).
+     The overlay fills the whole screen. The instant the user touches
+     or clicks anywhere on it, that IS a user gesture, so we unmute.
+     No button — just one natural tap on the video gives full sound. */
+  var unmuted = false;
+  function giveSound() {
+    if (unmuted) return;
+    unmuted = true;
+    overlay.removeEventListener('click',      giveSound);
+    overlay.removeEventListener('touchstart', giveSound);
     video.muted = false;
-    video.play().catch(function() {
-      /* Fallback: muted play (no button, video still plays) */
-      video.muted = true;
-      video.play().catch(dismissVideo);
-    });
   }
-
-  document.addEventListener('click',      onFirstGesture, { capture: true, once: true });
-  document.addEventListener('touchstart', onFirstGesture, { capture: true, once: true });
+  overlay.addEventListener('click',      giveSound);
+  overlay.addEventListener('touchstart', giveSound);
 }
 
 function dismissVideo() {
@@ -3615,10 +3609,12 @@ document.getElementById('hamburgerBtn').style.display = 'none';
 document.body.setAttribute('data-lang', state.langView);
 
 if (checkConsent()) {
-  /* Already consented this session — video overlay stays hidden */
+  /* Already consented this session — hide video overlay */
+  var ov = document.getElementById('videoOverlay');
+  if (ov) ov.classList.add('vo-gone');
 } else {
-  /* First visit — video will play with sound on user's first tap */
-  setupVideoTrigger();
+  /* First visit — video autoplays immediately, sound on first touch */
+  startVideo();
 }
 renderIntro();
 </script>
