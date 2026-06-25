@@ -3563,20 +3563,32 @@ function startVideo() {
   /* Dismiss when video ends */
   video.addEventListener('ended', dismissVideo);
 
-  /* Video autoplays muted via HTML attributes (works on every device).
-     The overlay fills the whole screen. The instant the user touches
-     or clicks anywhere on it, that IS a user gesture, so we unmute.
-     No button — just one natural tap on the video gives full sound. */
-  var unmuted = false;
-  function giveSound() {
-    if (unmuted) return;
-    unmuted = true;
-    overlay.removeEventListener('click',      giveSound);
-    overlay.removeEventListener('touchstart', giveSound);
+  /* Video autoplays muted (HTML attribute) — works on every device.
+     On first touch/click anywhere on the overlay we unlock audio.
+     iOS Safari and Android REQUIRE a new play() call inside the
+     gesture handler to activate the audio track — setting muted=false
+     alone is not enough. We pause, unmute, then replay from the same
+     position so sound starts seamlessly without restarting the video. */
+  var soundUnlocked = false;
+
+  function unlockSound(e) {
+    if (soundUnlocked) return;
+    soundUnlocked = true;
+    overlay.removeEventListener('touchstart', unlockSound, true);
+    overlay.removeEventListener('click',      unlockSound, true);
+
+    var t = video.currentTime;
     video.muted = false;
+    video.pause();
+    video.currentTime = t;
+    video.play().catch(function() {
+      /* extremely unlikely — video was already playing */
+    });
   }
-  overlay.addEventListener('click',      giveSound);
-  overlay.addEventListener('touchstart', giveSound);
+
+  /* capture:true ensures we get the event before anything else */
+  overlay.addEventListener('touchstart', unlockSound, { capture: true, passive: true });
+  overlay.addEventListener('click',      unlockSound, { capture: true });
 }
 
 function dismissVideo() {
