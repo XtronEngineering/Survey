@@ -760,6 +760,30 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
   .vo-topbar-badge{display:none;}
   .vo-topbar-title{font-size:11px;}
 }
+/* Muted hint — shown when browser forces muted autoplay */
+.vo-sound-hint{
+  position:absolute;bottom:18px;left:50%;
+  transform:translateX(-50%);
+  display:none;align-items:center;gap:7px;
+  background:rgba(0,0,0,.65);
+  border:1px solid rgba(255,255,255,.22);
+  color:#fff;font-size:13px;font-family:'Inter',sans-serif;font-weight:500;
+  padding:8px 18px;border-radius:999px;
+  cursor:pointer;white-space:nowrap;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  animation:hint-pop .35s cubic-bezier(.34,1.56,.64,1) both;
+  pointer-events:auto;
+}
+.vo-sound-hint.show{display:flex;}
+.vo-sound-hint svg{width:16px;height:16px;fill:#fff;flex-shrink:0;}
+@keyframes hint-pop{
+  from{opacity:0;transform:translateX(-50%) scale(.85);}
+  to  {opacity:1;transform:translateX(-50%) scale(1);}
+}
+@media(max-width:520px){
+  .vo-sound-hint{font-size:12px;padding:7px 15px;}
+}
 </style>
 </head>
 <body>
@@ -772,7 +796,7 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
       <div class="vo-topbar-title">Xtron Engineering Services Pvt. Ltd.</div>
       <div class="vo-topbar-badge">MSME Survey 2025</div>
     </div>
-    <div class="vo-video-wrap">
+    <div class="vo-video-wrap" id="voVideoWrap">
       <video
         id="introVideo"
         src="IMG_0689.MP4"
@@ -782,6 +806,11 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
         controlsList="nodownload nofullscreen noremoteplayback"
         preload="auto"
       ></video>
+      <!-- Appears only when browser forces muted; tap anywhere to unmute -->
+      <div class="vo-sound-hint" id="voSoundHint">
+        <svg viewBox="0 0 24 24"><path d="M16.5 12A4.5 4.5 0 0 0 14 7.97v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51A8.796 8.796 0 0 0 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06A8.99 8.99 0 0 0 17.73 18L19 19.27 20.27 18 5.27 3 4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+        Tap anywhere for sound
+      </div>
     </div>
     <div class="vo-progress-rail">
       <div class="vo-progress-fill" id="videoProgressBar"></div>
@@ -3558,17 +3587,32 @@ function startVideo() {
 
   video.addEventListener('ended', dismissVideo);
 
-  /* Try with sound first. If the browser blocks it (autoplay policy),
-     fall back to muted — which is guaranteed to play on every browser.
-     Never change muted state after play() starts — that pauses the video. */
+  /* 1. Try to play with sound */
   video.muted = false;
-  video.play().catch(function() {
+  video.play().then(function() {
+    /* Sound allowed — great, nothing more to do */
+  }).catch(function() {
+    /* 2. Browser blocked sound — play muted (always works) then
+          show hint. Tapping anywhere on the overlay unmutes via
+          a real user-gesture, which browsers allow. */
     video.muted = true;
-    video.play().catch(function() {
-      /* Absolute last resort — dismiss so user isn't stuck */
-      dismissVideo();
+    video.play().then(function() {
+      var hint = document.getElementById('voSoundHint');
+      if (hint) hint.classList.add('show');
+      /* One tap anywhere on the whole overlay unmutes */
+      var overlay = document.getElementById('videoOverlay');
+      if (overlay) overlay.addEventListener('click', enableSound, {once:true});
+    }).catch(function() {
+      dismissVideo(); /* absolute last resort */
     });
   });
+}
+
+function enableSound() {
+  var video = document.getElementById('introVideo');
+  var hint  = document.getElementById('voSoundHint');
+  if (video) video.muted = false;
+  if (hint)  hint.classList.remove('show');
 }
 
 function dismissVideo() {
