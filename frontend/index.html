@@ -760,6 +760,43 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
   .vo-topbar-badge{display:none;}
   .vo-topbar-title{font-size:11px;}
 }
+/* ── Tap-to-play screen ── */
+#voTapScreen{
+  position:absolute;inset:0;z-index:5;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:18px;
+  background:rgba(0,0,0,.55);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;-webkit-user-select:none;
+}
+.vots-play-ring{
+  width:84px;height:84px;border-radius:50%;
+  background:rgba(255,255,255,.15);
+  border:2.5px solid rgba(255,255,255,.9);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .15s ease,background .15s ease;
+  pointer-events:none;
+}
+#voTapScreen:active .vots-play-ring{
+  transform:scale(.92);background:rgba(255,255,255,.3);
+}
+.vots-play-ring svg{width:36px;height:36px;fill:#fff;margin-left:6px;}
+.vots-label{
+  color:rgba(255,255,255,.85);font-size:14px;font-weight:600;
+  font-family:'Inter',sans-serif;letter-spacing:.03em;
+  pointer-events:none;
+}
+.vots-sub{
+  color:rgba(255,255,255,.5);font-size:12px;
+  font-family:'Inter',sans-serif;margin-top:-10px;
+  pointer-events:none;
+}
+@media(max-width:480px){
+  .vots-play-ring{width:72px;height:72px;}
+  .vots-play-ring svg{width:30px;height:30px;}
+  .vots-label{font-size:13px;}
+}
 </style>
 </head>
 <body>
@@ -776,14 +813,20 @@ a,button,.opt,.sec-item,.role-card,.scale-btn{
       <video
         id="introVideo"
         src="IMG_0689.MP4"
-        autoplay
-        muted
         playsinline
         webkit-playsinline
         disablePictureInPicture
         controlsList="nodownload nofullscreen noremoteplayback"
         preload="auto"
       ></video>
+      <!-- tap-to-play screen: visible until user taps -->
+      <div id="voTapScreen">
+        <div class="vots-play-ring">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="vots-label">Tap to Play</div>
+        <div class="vots-sub">with sound</div>
+      </div>
     </div>
     <div class="vo-progress-rail">
       <div class="vo-progress-fill" id="videoProgressBar"></div>
@@ -3548,8 +3591,9 @@ function giveConsent() {
 }
 
 function startVideo() {
-  var video   = document.getElementById('introVideo');
-  var overlay = document.getElementById('videoOverlay');
+  var video     = document.getElementById('introVideo');
+  var overlay   = document.getElementById('videoOverlay');
+  var tapScreen = document.getElementById('voTapScreen');
   if (!video || !overlay) return;
 
   /* Progress bar */
@@ -3563,32 +3607,41 @@ function startVideo() {
   /* Dismiss when video ends */
   video.addEventListener('ended', dismissVideo);
 
-  /* Video autoplays muted (HTML attribute) — works on every device.
-     On first touch/click anywhere on the overlay we unlock audio.
-     iOS Safari and Android REQUIRE a new play() call inside the
-     gesture handler to activate the audio track — setting muted=false
-     alone is not enough. We pause, unmute, then replay from the same
-     position so sound starts seamlessly without restarting the video. */
-  var soundUnlocked = false;
+  /* TAP-TO-PLAY:
+     Browsers (iOS Safari, Android Chrome, Desktop) all allow video.play()
+     with sound when it is called directly inside a user-gesture handler.
+     We show a fullscreen tap screen over the video. On first tap/click:
+       1. Hide the tap screen
+       2. Set muted = false (before play, inside gesture = audio unlocked)
+       3. Call video.play() — guaranteed to work with sound on all devices
+     The `played` flag prevents double-fire from touchend + click. */
+  var played = false;
 
-  function unlockSound(e) {
-    if (soundUnlocked) return;
-    soundUnlocked = true;
-    overlay.removeEventListener('touchstart', unlockSound, true);
-    overlay.removeEventListener('click',      unlockSound, true);
+  function onTap(e) {
+    if (played) return;
+    played = true;
+    e.preventDefault();
+    e.stopPropagation();
 
-    var t = video.currentTime;
+    if (tapScreen) {
+      tapScreen.style.transition = 'opacity .2s ease';
+      tapScreen.style.opacity    = '0';
+      tapScreen.style.pointerEvents = 'none';
+      setTimeout(function() { tapScreen.style.display = 'none'; }, 220);
+    }
+
     video.muted = false;
-    video.pause();
-    video.currentTime = t;
-    video.play().catch(function() {
-      /* extremely unlikely — video was already playing */
+    video.play().catch(function(err) {
+      /* Fallback: if browser still rejects (extremely rare), play muted */
+      video.muted = true;
+      video.play().catch(function() {});
     });
   }
 
-  /* capture:true ensures we get the event before anything else */
-  overlay.addEventListener('touchstart', unlockSound, { capture: true, passive: true });
-  overlay.addEventListener('click',      unlockSound, { capture: true });
+  if (tapScreen) {
+    tapScreen.addEventListener('touchend', onTap, { passive: false });
+    tapScreen.addEventListener('click',    onTap);
+  }
 }
 
 function dismissVideo() {
