@@ -474,6 +474,33 @@ body:not([data-lang]) .en-only, [data-lang="both"] .en-only, [data-lang="mr"] .e
 }
 .toast.show{opacity:1;-webkit-transform:translateY(0);transform:translateY(0);}
 
+/* Saving loader */
+.saving-screen{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:60px 32px;
+  box-shadow:var(--sh-md);text-align:center;
+}
+.saving-spinner{
+  width:60px;height:60px;border-radius:50%;
+  border:4px solid var(--border);
+  border-top-color:var(--teal);
+  margin:0 auto 24px;
+  -webkit-animation:spin .85s linear infinite;
+  animation:spin .85s linear infinite;
+}
+@-webkit-keyframes spin{to{-webkit-transform:rotate(360deg);transform:rotate(360deg);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+.saving-title{font-size:20px;font-weight:600;color:var(--navy);margin-bottom:10px;line-height:1.35;}
+.saving-sub{font-size:14px;color:var(--mute);margin-top:6px;}
+.saving-error{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:48px 32px;
+  box-shadow:var(--sh-md);text-align:center;
+}
+.saving-error-icon{font-size:40px;margin-bottom:16px;}
+.saving-error-title{font-size:18px;font-weight:600;color:#B91C1C;margin-bottom:10px;line-height:1.35;}
+.saving-error-msg{font-size:13px;color:var(--mute);margin-bottom:24px;}
+
 /* Errors */
 .error-msg{color:#B91C1C;font-size:12.5px;margin-top:8px;display:none;}
 .q-card.error{border-color:#FCA5A5;}
@@ -3341,38 +3368,75 @@ function renderComplete() {
   var dAns = visible.filter(function(q){return q.decisive&&state.responses[q.id]!==undefined;}).length;
   var dur = state.startTime ? Math.round((Date.now()-state.startTime)/60000) : 0;
 
+  // Show saving loader while the response is being saved
   document.getElementById('mainPanel').innerHTML =
-    '<div class="complete">'
-    +'<div class="complete-icon">✓</div>'
-    +'<h2 class="mr">सर्वेक्षण पूर्ण झाले! 🎉</h2>'
-    +'<h2 class="hi">सर्वेक्षण पूर्ण हुआ! 🎉</h2>'
-    +'<h2 class="en-only">Survey Complete! 🎉</h2>'
-    +'<p class="mr">तुमच्या प्रामाणिक प्रतिसादाबद्दल धन्यवाद.</p>'
-    +'<p class="hi">आपकी ईमानदार प्रतिक्रिया के लिए धन्यवाद।</p>'
-    +'<p class="en">Thank you for your honest responses.</p>'
-    +'<div class="complete-stats">'
-    +'<div class="stat"><div class="stat-num">'+answered+'</div>'
-    +'<div class="stat-lbl"><span class="mr">उत्तरे</span><span class="hi">उत्तर</span><span class="en">Answered</span></div></div>'
-    +'<div class="stat"><div class="stat-num">'+dAns+'/'+decisive+'</div>'
-    +'<div class="stat-lbl"><span class="mr">निर्णायक</span><span class="hi">निर्णायक</span><span class="en">Decisive</span></div></div>'
-    +'<div class="stat"><div class="stat-num">'+dur+' min</div>'
-    +'<div class="stat-lbl"><span class="mr">वेळ</span><span class="hi">समय</span><span class="en">Duration</span></div></div>'
+    '<div class="saving-screen">'
+    +'<div class="saving-spinner"></div>'
+    +'<div class="saving-title">'
+    +'<span class="mr">सर्वेक्षण सेव्ह होत आहे...</span>'
+    +'<span class="hi">सर्वेक्षण सहेजा जा रहा है...</span>'
+    +'<span class="en-only">Saving your survey...</span>'
     +'</div>'
-    +'<div class="actions-row">'
-    +'<button class="btn btn-ghost" onclick="renderSection();document.getElementById(\'layout\').classList.remove(\'intro-mode\')">'
-    +'<span class="mr">परत भरा / Refill</span>'
-    +'<span class="hi">वापस भरें / Refill</span>'
-    +'<span class="en">Refill / Review Answers</span>'
-    +'</button>'
+    +'<div class="saving-sub">'
+    +'<span class="mr">कृपया प्रतीक्षा करा</span>'
+    +'<span class="hi">कृपया प्रतीक्षा करें</span>'
+    +'<span class="en-only">Please wait a moment</span>'
     +'</div>'
-    +'<div id="submitStatus" style="margin-top:20px;text-align:center;display:none;">'
-    +'<div id="submitMessage" style="padding:12px;border-radius:var(--radius);font-weight:500"></div>'
-    +'</div></div>';
+    +'</div>';
 
-  // Auto-submit to Supabase
-  submitToSupabase();
-  
   applyLangView();
+
+  // Submit to database; show thank-you only after confirmed save
+  submitToSupabase(
+    function onSuccess() {
+      document.getElementById('mainPanel').innerHTML =
+        '<div class="complete">'
+        +'<div class="complete-icon">✓</div>'
+        +'<h2 class="mr">सर्वेक्षण पूर्ण झाले! 🎉</h2>'
+        +'<h2 class="hi">सर्वेक्षण पूर्ण हुआ! 🎉</h2>'
+        +'<h2 class="en-only">Survey Complete! 🎉</h2>'
+        +'<p class="mr">तुमच्या प्रामाणिक प्रतिसादाबद्दल धन्यवाद.</p>'
+        +'<p class="hi">आपकी ईमानदार प्रतिक्रिया के लिए धन्यवाद।</p>'
+        +'<p class="en">Thank you for your honest responses.</p>'
+        +'<div class="complete-stats">'
+        +'<div class="stat"><div class="stat-num">'+answered+'</div>'
+        +'<div class="stat-lbl"><span class="mr">उत्तरे</span><span class="hi">उत्तर</span><span class="en">Answered</span></div></div>'
+        +'<div class="stat"><div class="stat-num">'+dAns+'/'+decisive+'</div>'
+        +'<div class="stat-lbl"><span class="mr">निर्णायक</span><span class="hi">निर्णायक</span><span class="en">Decisive</span></div></div>'
+        +'<div class="stat"><div class="stat-num">'+dur+' min</div>'
+        +'<div class="stat-lbl"><span class="mr">वेळ</span><span class="hi">समय</span><span class="en">Duration</span></div></div>'
+        +'</div>'
+        +'<div class="actions-row">'
+        +'<button class="btn btn-ghost" onclick="renderSection();document.getElementById(\'layout\').classList.remove(\'intro-mode\')">'
+        +'<span class="mr">परत भरा / Refill</span>'
+        +'<span class="hi">वापस भरें / Refill</span>'
+        +'<span class="en">Refill / Review Answers</span>'
+        +'</button>'
+        +'</div>'
+        +'</div>';
+      applyLangView();
+    },
+    function onError(errMsg) {
+      document.getElementById('mainPanel').innerHTML =
+        '<div class="saving-error">'
+        +'<div class="saving-error-icon">⚠️</div>'
+        +'<div class="saving-error-title">'
+        +'<span class="mr">सेव्ह झाले नाही</span>'
+        +'<span class="hi">सहेजा नहीं गया</span>'
+        +'<span class="en-only">Could not save survey</span>'
+        +'</div>'
+        +'<div class="saving-error-msg">'+(errMsg||'')+'</div>'
+        +'<div class="actions-row">'
+        +'<button class="btn btn-primary" onclick="renderComplete()">'
+        +'<span class="mr">पुन्हा प्रयत्न करा</span>'
+        +'<span class="hi">फिर कोशिश करें</span>'
+        +'<span class="en-only">Retry</span>'
+        +'</button>'
+        +'</div>'
+        +'</div>';
+      applyLangView();
+    }
+  );
 }
 
 // ════════════════════════════
@@ -3520,12 +3584,7 @@ function downloadCSV() {
 // ════════════════════════════
 //  AUTO-SUBMIT TO SUPABASE
 // ════════════════════════════
-function submitToSupabase() {
-  var visible = getVisibleQuestions();
-  var answered = visible.filter(function(q){
-    var v = state.responses[q.id];
-    return v!==undefined&&v!==''&&!(Array.isArray(v)&&v.length===0);
-  }).length;
+function submitToSupabase(onSuccess, onError) {
   var dur = state.startTime ? Math.round((Date.now()-state.startTime)/60000) : 0;
 
   var payload = {
@@ -3541,12 +3600,10 @@ function submitToSupabase() {
   console.log('Submitting survey to backend:', payload);
 
   var backendUrl = 'https://survey-giv2.onrender.com/api/survey/submit';
-  
+
   fetch(backendUrl, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   })
   .then(function(response) {
@@ -3558,14 +3615,12 @@ function submitToSupabase() {
     return response.json();
   })
   .then(function(result) {
-    // Success - show toast
-    toast('✓ सर्वेक्षण डेटाबेसमध्ये सेव झाला / Survey saved to database');
     console.log('Survey submitted successfully:', result);
+    if (typeof onSuccess === 'function') onSuccess(result);
   })
   .catch(function(error) {
-    // Failure - show error message
     console.error('Submit error:', error);
-    toast('✗ सेव झाले नाही / Failed to save: ' + error.message);
+    if (typeof onError === 'function') onError(error.message);
   });
 }
 
