@@ -67,7 +67,7 @@ const QUESTIONS_DATA = {
 
   questions: [
     // ───────── SECTION A — FIRMOGRAPHICS (6 Q) ─────────
-    {id:"A1", sec:"A", role:"A", type:"single", required:true,
+    {id:"A1", sec:"A", role:"A", type:"single", required:false,
       q_mr:"प्रमुख उद्योग क्षेत्र?", q_en:"Primary manufacturing sector?",
       options:[
         {mr:"वाहन घटक / इंजिनीअरिंग", en:"Auto components / Engineering"},
@@ -76,7 +76,7 @@ const QUESTIONS_DATA = {
         {mr:"इलेक्ट्रॉनिक्स / फाउंड्री", en:"Electronics / Foundry / Castings"},
         {mr:"इतर", en:"Other (specify)"}
       ]},
-    {id:"A2", sec:"A", role:"A", type:"single", required:true, branching:true,
+    {id:"A2", sec:"A", role:"A", type:"single", required:false, branching:true,
       q_mr:"कंपनीतील आपली भूमिका?", q_en:"Your role?",
       options:[
         {mr:"मालक / डायरेक्टर", en:"Owner / Director"},
@@ -85,7 +85,7 @@ const QUESTIONS_DATA = {
         {mr:"ऑपरेटर / तंत्रज्ञ", en:"Operator / Technician"},
         {mr:"अकाउंटंट / प्रशासन", en:"Accountant / Admin"}
       ]},
-    {id:"A3", sec:"A", role:"A", type:"single", required:true,
+    {id:"A3", sec:"A", role:"A", type:"single", required:false,
       q_mr:"एकूण कर्मचारी किती?", q_en:"Total number of employees?",
       options:[
         {mr:"५ ते १५", en:"5 to 15"},
@@ -94,7 +94,7 @@ const QUESTIONS_DATA = {
         {mr:"१०१ ते २५०", en:"101 to 250"},
         {mr:"२५० पेक्षा जास्त", en:"More than 250"}
       ]},
-    {id:"A3b", sec:"A", role:"A", type:"single", required:true,
+    {id:"A3b", sec:"A", role:"A", type:"single", required:false,
       q_mr:"वार्षिक उलाढाल किती?", q_en:"Annual turnover?",
       options:[
         {mr:"१ कोटीपेक्षा कमी", en:"Less than Rs 1 Cr"},
@@ -103,7 +103,7 @@ const QUESTIONS_DATA = {
         {mr:"२५ ते १०० कोटी", en:"Rs 25 to 100 Cr"},
         {mr:"१०० कोटीपेक्षा जास्त", en:"More than Rs 100 Cr"}
       ]},
-    {id:"A4", sec:"A", role:"O,M", type:"single", required:true,
+    {id:"A4", sec:"A", role:"O,M", type:"single", required:false,
       q_mr:"आज कोणते business software वापरता?", q_en:"What business software do you use today?",
       options:[
         {mr:"काहीच नाही — फक्त कागद / Excel", en:"None — only paper / Excel"},
@@ -112,7 +112,7 @@ const QUESTIONS_DATA = {
         {mr:"SAP / Zoho / Odoo / ERP", en:"SAP / Zoho / Odoo / ERP"},
         {mr:"इतर (नमूद करा)", en:"Other (specify)"}
       ]},
-    {id:"A5", sec:"A", role:"O,M", type:"single", required:true,
+    {id:"A5", sec:"A", role:"O,M", type:"single", required:false,
       q_mr:"किती काम अजून manual / कागदावर?", q_en:"How much work is still manual / on paper?",
       options:[
         {mr:"80%+", en:"More than 80%"},
@@ -121,7 +121,7 @@ const QUESTIONS_DATA = {
         {mr:"20-40%", en:"20-40%"},
         {mr:"<20%", en:"Less than 20%"}
       ]},
-    {id:"A6", sec:"A", role:"A", type:"single", required:true,
+    {id:"A6", sec:"A", role:"A", type:"single", required:false,
       q_mr:"कोणत्या device वर सर्वात जास्त काम कराल?", q_en:"Which device will you use the most for this tool?",
       options:[
         {mr:"फक्त मोबाईल", en:"Mobile phone only"},
@@ -132,7 +132,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── SECTION B — CUSTOMER BEHAVIOUR (6 Q) ─────────
-    {id:"B1", sec:"B", role:"O", type:"multi", max:2, required:true,
+    {id:"B1", sec:"B", role:"O", type:"multi", max:2, required:false,
       q_mr:"आज business ची स्थिती कशी तपासता? (टॉप 2)", q_en:"How do you check business status today? (pick top 2)",
       help_mr:"वर्तमान सवय — Digital Tool कुठे insert करायचे ते कळेल.",
       help_en:"Current behaviour — shows where Digital Tool should insert.",
@@ -143,7 +143,7 @@ const QUESTIONS_DATA = {
         {mr:"Floor वर फिरून + supervisor", en:"Floor walk + supervisor"},
         {mr:"इतर (नमूद करा)", en:"Other (specify)"}
       ]},
-    {id:"B2", sec:"B", role:"O", type:"single", required:true, decisive:true,
+    {id:"B2", sec:"B", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ Operational माहिती कुठे राहते?", q_en:"⭐ Where does your operational knowledge live?",
       help_mr:"हे सांगते की business किती एका माणसावर अवलंबून आहे.",
       help_en:"Shows how dependent the business is on one person.",
@@ -154,7 +154,7 @@ const QUESTIONS_DATA = {
         {mr:"Excel + Tally", en:"Excel + Tally"},
         {mr:"Documented + Software", en:"Documented + Software"}
       ]},
-    {id:"B3", sec:"B", role:"O,M", type:"multi", max:3, required:true,
+    {id:"B3", sec:"B", role:"O,M", type:"multi", max:3, required:false,
       q_mr:"गेल्या 12 महिन्यातील सर्वात मोठ्या अडचणी? (टॉप 3)", q_en:"Biggest operational headaches in last 12 months? (pick top 3)",
       options:[
         {mr:"Cash flow / payment उशीर", en:"Cash flow / payment delays"},
@@ -164,7 +164,7 @@ const QUESTIONS_DATA = {
         {mr:"Worker / quality / तक्रारी", en:"Worker / quality / complaints"},
         {mr:"इतर (नमूद करा)", en:"Other (specify)"}
       ]},
-    {id:"B4", sec:"B", role:"A", type:"single", required:true,
+    {id:"B4", sec:"B", role:"A", type:"single", required:false,
       q_mr:"नवीन digital tool बद्दल तुम्ही कसे?", q_en:"How ready are you for new digital tools?",
       options:[
         {mr:"लगेच वापरून बघणारा", en:"Early adopter — eager"},
@@ -173,7 +173,7 @@ const QUESTIONS_DATA = {
         {mr:"भाग पडल्यावरच", en:"Only when forced"},
         {mr:"manual च आवडते", en:"Resistant — prefer manual"}
       ]},
-    {id:"B5", sec:"B", role:"O,M", type:"single", required:true,
+    {id:"B5", sec:"B", role:"O,M", type:"single", required:false,
       q_mr:"रोजचा आढावा (review) कधी होतो?", q_en:"When does your daily review happen?",
       options:[
         {mr:"सकाळी + संध्याकाळी", en:"Morning + evening"},
@@ -182,7 +182,7 @@ const QUESTIONS_DATA = {
         {mr:"अडचण आल्यावरच", en:"Only when problem arises"},
         {mr:"ठरलेला review नाही", en:"No structured review"}
       ]},
-    {id:"B6", sec:"B", role:"O", type:"single", required:true, decisive:true,
+    {id:"B6", sec:"B", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ नवीन software का बंद केले / वापरले नाही (आधी)?", q_en:"⭐ If you tried software before and stopped — main reason?",
       options:[
         {mr:"खूप अवघड / गुंतागुंतीचे", en:"Too complex / complicated"},
@@ -193,7 +193,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── SECTION C — CORE FEATURE DISCOVERY (14 Q) ─────────
-    {id:"C1", sec:"C", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"C1", sec:"C", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ Dashboard तुम्ही स्वतः सजवता आला पाहिजे का?", q_en:"⭐ Should you be able to customize your own dashboard?",
       options:[
         {mr:"हो — पूर्ण माझ्या पद्धतीने", en:"Yes — fully my way (drag/drop widgets)"},
@@ -202,7 +202,7 @@ const QUESTIONS_DATA = {
         {mr:"नको — simple ठेवा", en:"No — keep it simple / fixed"},
         {mr:"माहीत नाही", en:"Don't know"}
       ]},
-    {id:"C2", sec:"C", role:"O", type:"multi", max:5, required:true,
+    {id:"C2", sec:"C", role:"O", type:"multi", max:5, required:false,
       q_mr:"Dashboard वर पहिल्या नजरेत काय हवे? (टॉप 5)", q_en:"Top 5 things you want on your dashboard at a glance?",
       options:[
         {mr:"Cash + येणी (receivables)", en:"Cash + receivables"},
@@ -211,7 +211,7 @@ const QUESTIONS_DATA = {
         {mr:"Quality / rejection", en:"Quality / rejection rate"},
         {mr:"आजच्या top 3 गोष्टी", en:"Today's top 3 priorities"}
       ]},
-    {id:"C3", sec:"C", role:"A", type:"single", required:true, decisive:true,
+    {id:"C3", sec:"C", role:"A", type:"single", required:false, decisive:true,
       q_mr:"⭐ माहिती भरायची सर्वात सोपी पद्धत कोणती?", q_en:"⭐ Easiest way for you / your team to enter data?",
       help_mr:"Operator खरंच कोणती पद्धत वापरेल?",
       help_en:"Which method will the operator actually use?",
@@ -222,7 +222,7 @@ const QUESTIONS_DATA = {
         {mr:"Type करून", en:"By typing"},
         {mr:"इतर (नमूद करा)", en:"Other (specify)"}
       ]},
-    {id:"C4", sec:"C", role:"A", type:"single", required:true,
+    {id:"C4", sec:"C", role:"A", type:"single", required:false,
       q_mr:"माहिती भरणे किती किचकट असेल तर सोडून द्याल?", q_en:"Data entry is too much if it takes more than?",
       options:[
         {mr:"10 सेकंद", en:"10 seconds per entry"},
@@ -231,7 +231,7 @@ const QUESTIONS_DATA = {
         {mr:"2-3 मिनिटे चालेल", en:"2-3 minutes is OK"},
         {mr:"वेळेची अडचण नाही", en:"Time is not an issue"}
       ]},
-    {id:"C5", sec:"C", role:"O,M", type:"multi", max:3, required:true,
+    {id:"C5", sec:"C", role:"O,M", type:"multi", max:3, required:false,
       q_mr:"सर्वात महत्त्वाची विद्यमान साधन जोडणी कोणती? (टॉप 3)", q_en:"Most Important Existing Tool Integration (pick top 3)?",
       options:[
         {mr:"Tally (दोन्ही बाजूने)", en:"Tally (two-way)"},
@@ -241,7 +241,7 @@ const QUESTIONS_DATA = {
         {mr:"WhatsApp + GeM / IndiaMART", en:"WhatsApp + GeM / IndiaMART"},
         {mr:"इतर (नमूद करा)", en:"Other (specify)"}
       ]},
-    {id:"C6", sec:"C", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"C6", sec:"C", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ Tally / SAP मधील जुना data आपोआप आला पाहिजे का?", q_en:"⭐ Should your existing Tally / SAP data import automatically?",
       options:[
         {mr:"हो — deal-breaker, नसेल तर घेणार नाही", en:"Yes — deal-breaker, won't buy without it"},
@@ -250,7 +250,7 @@ const QUESTIONS_DATA = {
         {mr:"नको — fresh सुरुवात ठीक", en:"No — fresh start is fine"},
         {mr:"ERP वापरत नाही", en:"Don't use ERP"}
       ]},
-    {id:"C7", sec:"C", role:"A", type:"single", required:true, decisive:true,
+    {id:"C7", sec:"C", role:"A", type:"single", required:false, decisive:true,
       q_mr:"⭐ इंटरनेट नसताना app चालले पाहिजे का?", q_en:"⭐ Must the app work without internet (offline)?",
       help_mr:"Factory भागात अनेकदा internet कमी असतो.",
       help_en:"Internet is often weak in factory areas.",
@@ -261,7 +261,7 @@ const QUESTIONS_DATA = {
         {mr:"क्वचित लागेल", en:"Rarely needed"},
         {mr:"नेहमी online असतो", en:"Always online"}
       ]},
-    {id:"C8", sec:"C", role:"A", type:"single", required:true, decisive:true,
+    {id:"C8", sec:"C", role:"A", type:"single", required:false, decisive:true,
       q_mr:"⭐ English / Hindi / मराठीत बोलून माहिती भरणे किती महत्त्वाचे?", q_en:"⭐ How important is voice-to-text in English / Hindi / Marathi?",
       options:[
         {mr:"अत्यावश्यक — नसेल तर वापरणार नाही", en:"Critical — won't use without it"},
@@ -270,7 +270,7 @@ const QUESTIONS_DATA = {
         {mr:"नको — typing चालेल", en:"Not needed — typing is fine"},
         {mr:"माहीत नाही", en:"Don't know"}
       ]},
-    {id:"C9", sec:"C", role:"A", type:"multi", max:3, required:true,
+    {id:"C9", sec:"C", role:"A", type:"multi", max:3, required:false,
       q_mr:"कोणत्या गोष्टी बोलून करायला आवडेल? (टॉप 3)", q_en:"Which things would you do by VOICE? (pick top 3)",
       options:[
         {mr:"Defect / quality नोंद", en:"Log defect / quality"},
@@ -279,7 +279,7 @@ const QUESTIONS_DATA = {
         {mr:"Digital Tool ला प्रश्न विचारणे", en:"Ask the Digital Tool a question"},
         {mr:"रोजचा summary ऐकणे", en:"Listen to daily summary"}
       ]},
-    {id:"C10", sec:"C", role:"O", type:"multi", required:true,
+    {id:"C10", sec:"C", role:"O", type:"multi", required:false,
       q_mr:"कोणत्या भाषा हव्यात?", q_en:"Which languages do you need?",
       options:[
         {mr:"मराठी", en:"Marathi"},
@@ -288,7 +288,7 @@ const QUESTIONS_DATA = {
         {mr:"गुजराती / तमिळ", en:"Gujarati / Tamil"},
         {mr:"सर्व", en:"All"}
       ]},
-    {id:"C11", sec:"C", role:"A", type:"single", required:true, decisive:true,
+    {id:"C11", sec:"C", role:"A", type:"single", required:false, decisive:true,
       q_mr:"⭐ वेगवेगळ्या लोकांना वेगळी भाषा लागते का?", q_en:"⭐ Do different people need different languages?",
       options:[
         {mr:"मालक English, operator मराठी", en:"Owner English; operator Marathi"},
@@ -297,7 +297,7 @@ const QUESTIONS_DATA = {
         {mr:"व्यक्तीनुसार वेगळी", en:"Different per person"},
         {mr:"English सर्वांना चालेल", en:"English fine for all"}
       ]},
-    {id:"C12", sec:"C", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"C12", sec:"C", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ मोबाईल Camera ने Part चा Photo → Digital Tool Detect → Quality Flag — किती उपयोगी?", q_en:"⭐ Mobile Tool quality check (photo a part → Mobile Tool detect → flag quality check) — how useful?",
       help_mr:"Operator फक्त फोटो काढेल आणि Digital Tool defect सांगेल — training लागणार नाही.",
       help_en:"Operator just takes a photo of a part → Mobile Tool detects → flags quality check — no training needed.",
@@ -308,7 +308,7 @@ const QUESTIONS_DATA = {
         {mr:"आमच्या कामात उपयोग नाही", en:"Not relevant to our work"},
         {mr:"माहीत नाही", en:"Don't know"}
       ]},
-    {id:"C13", sec:"C", role:"O,M", type:"single", required:true,
+    {id:"C13", sec:"C", role:"O,M", type:"single", required:false,
       q_mr:"दृश्य गुणवत्ता तपासणी आज कशी होते?", q_en:"How is Visual Quality Inspection done today?",
       options:[
         {mr:"डोळ्याने, अनुभवी माणूस", en:"By eye, experienced person"},
@@ -317,7 +317,7 @@ const QUESTIONS_DATA = {
         {mr:"Lab / outsource", en:"Lab / outsourced"},
         {mr:"Camera / machine vision आहे", en:"Already have camera / machine vision"}
       ]},
-    {id:"C14", sec:"C", role:"A", type:"single", required:true, decisive:true,
+    {id:"C14", sec:"C", role:"A", type:"single", required:false, decisive:true,
       q_mr:"⭐ WhatsApp वरून alert, report, मंजुरी — किती महत्त्वाचे?", q_en:"⭐ WhatsApp for alerts, reports, approvals — how important?",
       options:[
         {mr:"अत्यावश्यक — WhatsApp शिवाय नको", en:"Critical — won't use without WhatsApp"},
@@ -328,7 +328,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── SECTION D — MODULE PRIORITY (3 Q) ─────────
-    {id:"D1", sec:"D", role:"O,M", type:"multi", max:3, required:true, decisive:true,
+    {id:"D1", sec:"D", role:"O,M", type:"multi", max:3, required:false, decisive:true,
       q_mr:"⭐ 6 modules पैकी सर्वात महत्त्वाचे 3 कोणते?", q_en:"⭐ Of the 6 modules, pick ONLY 3 you need MOST",
       options:[
         {mr:"Finance (cash, GST, compliance)", en:"Finance (cash, GST, compliance)"},
@@ -337,7 +337,7 @@ const QUESTIONS_DATA = {
         {mr:"Supply Chain & Logistics", en:"Supply Chain & Logistics"},
         {mr:"Sales & Marketing", en:"Sales & Marketing"}
       ]},
-    {id:"D2", sec:"D", role:"O", type:"single", required:true, decisive:true,
+    {id:"D2", sec:"D", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ फक्त एकच module घेऊ शकलात तर?", q_en:"⭐ If you could buy ONLY ONE module — which?",
       options:[
         {mr:"Finance", en:"Finance"},
@@ -346,7 +346,7 @@ const QUESTIONS_DATA = {
         {mr:"Supply Chain & Logistics", en:"Supply Chain & Logistics"},
         {mr:"HR / Sales (इतर)", en:"HR / Sales (other)"}
       ]},
-    {id:"D3", sec:"D", role:"O,M", type:"single", required:true,
+    {id:"D3", sec:"D", role:"O,M", type:"single", required:false,
       q_mr:"HR module किती महत्त्वाचे?", q_en:"How important is the HR & Payroll module?",
       options:[
         {mr:"अत्यावश्यक", en:"Essential"},
@@ -357,7 +357,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── M1 FINANCE (4 Q) ─────────
-    {id:"M1-1", sec:"M", role:"O", type:"multi", max:3, required:true,
+    {id:"M1-1", sec:"M", role:"O", type:"multi", max:3, required:false,
       q_mr:"Finance मध्ये कोणती 3 features सर्वात हवीत?", q_en:"Top 3 finance features you want most?",
       options:[
         {mr:"Cash forecast (30/60/90 दिवस)", en:"Cash forecast (30/60/90 days)"},
@@ -366,7 +366,7 @@ const QUESTIONS_DATA = {
         {mr:"Product-wise नफा / margin", en:"Product-wise margin"},
         {mr:"खर्च + budget tracking", en:"Expense + budget tracking"}
       ]},
-    {id:"M1-2", sec:"M", role:"O", type:"single", required:true, decisive:true,
+    {id:"M1-2", sec:"M", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ कोणते Digital Tool insight सर्वात उपयोगी? (Finance)", q_en:"⭐ Which Digital Tool insight is most useful in Finance?",
       options:[
         {mr:"22 दिवसांत cash कमी पडेल असा इशारा", en:"'Cash crisis in 22 days' warning"},
@@ -375,7 +375,7 @@ const QUESTIONS_DATA = {
         {mr:"GST deadline + दंड इशारा", en:"GST deadline + penalty alert"},
         {mr:"नफा कुठे गळतोय", en:"Where margin is leaking"}
       ]},
-    {id:"M1-3", sec:"M", role:"O,M", type:"multi", required:true,
+    {id:"M1-3", sec:"M", role:"O,M", type:"multi", required:false,
       q_mr:"कोणत्या जोडण्या (integration) हव्यात?", q_en:"Which finance integrations do you need?",
       options:[
         {mr:"Tally दोन्ही बाजूने", en:"Tally two-way"},
@@ -384,7 +384,7 @@ const QUESTIONS_DATA = {
         {mr:"UPI / Razorpay", en:"UPI / Razorpay"},
         {mr:"SAP / Zoho", en:"SAP / Zoho"}
       ]},
-    {id:"M1-4", sec:"M", role:"O", type:"single", required:true, decisive:true,
+    {id:"M1-4", sec:"M", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ Finance साठी महिन्याला किती द्याल?", q_en:"⭐ What would you pay monthly for Finance alone?",
       options:[
         {mr:"वेगळे पैसे देणार नाही", en:"Won't pay separately"},
@@ -395,7 +395,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── M2 PRODUCTION & OPERATIONS (4 Q) ─────────
-    {id:"M2-1", sec:"M", role:"O,M", type:"multi", max:3, required:true,
+    {id:"M2-1", sec:"M", role:"O,M", type:"multi", max:3, required:false,
       q_mr:"Production मध्ये कोणती 3 features हवीत?", q_en:"Top 3 production & operations features?",
       options:[
         {mr:"रोजचे Digital Tool schedule / planning", en:"Digital Tool daily schedule / planning"},
@@ -404,7 +404,7 @@ const QUESTIONS_DATA = {
         {mr:"Bottleneck इशारा", en:"Bottleneck prediction"},
         {mr:"7 AM WhatsApp प्राधान्य-यादी", en:"7 AM WhatsApp priority list"}
       ]},
-    {id:"M2-2", sec:"M", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"M2-2", sec:"M", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ कोणते Digital Tool insight सर्वात उपयोगी? (Production)", q_en:"⭐ Most useful Digital Tool insight in production?",
       options:[
         {mr:"आज bottleneck कुठे होईल", en:"Where today's bottleneck will be"},
@@ -413,7 +413,7 @@ const QUESTIONS_DATA = {
         {mr:"worker / machine reassign सूचना", en:"Worker / machine reassign suggestion"},
         {mr:"उद्याचे planning सुचवणे", en:"Suggest tomorrow's plan"}
       ]},
-    {id:"M2-3", sec:"M", role:"P", type:"single", required:true,
+    {id:"M2-3", sec:"M", role:"P", type:"single", required:false,
       q_mr:"Operator म्हणून production नोंद कशी कराल?", q_en:"As operator, how will you log production?",
       options:[
         {mr:"बोलून (voice)", en:"By voice"},
@@ -422,7 +422,7 @@ const QUESTIONS_DATA = {
         {mr:"Type करून", en:"By typing"},
         {mr:"नोंद करणार नाही", en:"Won't log"}
       ]},
-    {id:"M2-4", sec:"M", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"M2-4", sec:"M", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ Production module साठी किती द्याल?", q_en:"⭐ Monthly WTP for Production module?",
       options:[
         {mr:"वेगळे नाही", en:"Won't pay separately"},
@@ -433,7 +433,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── M3 QUALITY (4 Q) ─────────
-    {id:"M3-1", sec:"M", role:"O,M", type:"multi", max:3, required:true,
+    {id:"M3-1", sec:"M", role:"O,M", type:"multi", max:3, required:false,
       q_mr:"Quality मध्ये कोणती 3 features हवीत?", q_en:"Top 3 quality features?",
       options:[
         {mr:"मराठीत बोलून SOP तयार", en:"Marathi voice-to-SOP"},
@@ -442,7 +442,7 @@ const QUESTIONS_DATA = {
         {mr:"NCR + 5-Why / 8D", en:"NCR + 5-Why / 8D"},
         {mr:"Customer तक्रार tracking", en:"Customer complaint tracking"}
       ]},
-    {id:"M3-2", sec:"M", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"M3-2", sec:"M", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ Camera ने quality तपासणी — वापराल का?", q_en:"⭐ Would you actually use camera-based (CV) inspection?",
       options:[
         {mr:"हो — रोज, अनेक parts", en:"Yes — daily, many parts"},
@@ -451,7 +451,7 @@ const QUESTIONS_DATA = {
         {mr:"नाही — हाताने तपासतो", en:"No — manual is fine"},
         {mr:"माहीत नाही", en:"Don't know"}
       ]},
-    {id:"M3-3", sec:"M", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"M3-3", sec:"M", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ कोणते Digital Tool insight सर्वात उपयोगी? (Quality)", q_en:"⭐ Most useful Digital Tool insight in quality?",
       options:[
         {mr:"48 तास आधी defect इशारा", en:"48-hr advance defect warning"},
@@ -460,7 +460,7 @@ const QUESTIONS_DATA = {
         {mr:"कोणता batch नाकारण्याचा धोका", en:"Which batch is at risk"},
         {mr:"ISO 9001 तयारी मार्गदर्शन", en:"ISO 9001 readiness guidance"}
       ]},
-    {id:"M3-4", sec:"M", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"M3-4", sec:"M", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ Quality module साठी किती द्याल?", q_en:"⭐ Monthly WTP for Quality module?",
       options:[
         {mr:"वेगळे नाही", en:"Won't pay separately"},
@@ -471,7 +471,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── M4 SUPPLY CHAIN & LOGISTICS (4 Q) ─────────
-    {id:"M4-1", sec:"M", role:"O,M", type:"multi", max:3, required:true,
+    {id:"M4-1", sec:"M", role:"O,M", type:"multi", max:3, required:false,
       q_mr:"Supply chain मध्ये कोणती 3 features हवीत?", q_en:"Top 3 supply chain & logistics features?",
       options:[
         {mr:"Auto-reorder (stock कमी इशारा)", en:"Auto-reorder (low-stock alert)"},
@@ -480,7 +480,7 @@ const QUESTIONS_DATA = {
         {mr:"Shipment tracking + e-way bill", en:"Shipment tracking + e-way bill"},
         {mr:"किंमत तुलना (vendors)", en:"Price comparison across vendors"}
       ]},
-    {id:"M4-2", sec:"M", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"M4-2", sec:"M", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ कोणते Digital Tool insight सर्वात उपयोगी? (Supply Chain)", q_en:"⭐ Most useful Digital Tool insight in supply chain?",
       options:[
         {mr:"आता काय re-order करावे", en:"What to reorder now"},
@@ -489,7 +489,7 @@ const QUESTIONS_DATA = {
         {mr:"substitute material सुचवणे", en:"Suggest substitute material"},
         {mr:"delivery उशीर इशारा", en:"Delivery delay alert"}
       ]},
-    {id:"M4-3", sec:"M", role:"O,M", type:"single", required:true,
+    {id:"M4-3", sec:"M", role:"O,M", type:"single", required:false,
       q_mr:"Inventory आज कशी सांभाळता?", q_en:"How do you manage inventory today?",
       options:[
         {mr:"कागद / register", en:"Paper / register"},
@@ -498,7 +498,7 @@ const QUESTIONS_DATA = {
         {mr:"डोक्यात / अंदाजाने", en:"In head / by guess"},
         {mr:"Barcode / system", en:"Barcode / system"}
       ]},
-    {id:"M4-4", sec:"M", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"M4-4", sec:"M", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ Supply Chain module साठी किती द्याल?", q_en:"⭐ Monthly WTP for Supply Chain module?",
       options:[
         {mr:"वेगळे नाही", en:"Won't pay separately"},
@@ -509,7 +509,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── M5 SALES & MARKETING (4 Q) ─────────
-    {id:"M5-1", sec:"M", role:"O", type:"multi", max:3, required:true,
+    {id:"M5-1", sec:"M", role:"O", type:"multi", max:3, required:false,
       q_mr:"Sales & Marketing मध्ये कोणती 3 features?", q_en:"Top 3 sales & marketing features?",
       options:[
         {mr:"Lead / enquiry tracking (CRM)", en:"Lead / enquiry tracking (CRM)"},
@@ -518,7 +518,7 @@ const QUESTIONS_DATA = {
         {mr:"मराठीत marketing content", en:"Marathi marketing content"},
         {mr:"WhatsApp / social auto-post", en:"WhatsApp / social auto-post"}
       ]},
-    {id:"M5-2", sec:"M", role:"O", type:"single", required:true, decisive:true,
+    {id:"M5-2", sec:"M", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ कोणते Digital Tool insight सर्वात उपयोगी? (Sales)", q_en:"⭐ Most useful Digital Tool insight in sales?",
       options:[
         {mr:"कोणता customer परत order देईल", en:"Which customer will reorder"},
@@ -527,7 +527,7 @@ const QUESTIONS_DATA = {
         {mr:"cross-sell सूचना", en:"Cross-sell suggestion"},
         {mr:"कोणत्या lead वर लक्ष द्यावे", en:"Which lead to focus on"}
       ]},
-    {id:"M5-3", sec:"M", role:"O", type:"single", required:true,
+    {id:"M5-3", sec:"M", role:"O", type:"single", required:false,
       q_mr:"Digital marketing आज कोण करते?", q_en:"Who does your digital marketing today?",
       options:[
         {mr:"कोणीच नाही", en:"Nobody"},
@@ -536,7 +536,7 @@ const QUESTIONS_DATA = {
         {mr:"बाहेरून agency", en:"Outside agency"},
         {mr:"गरज वाटत नाही", en:"Don't feel the need"}
       ]},
-    {id:"M5-4", sec:"M", role:"O", type:"single", required:true, decisive:true,
+    {id:"M5-4", sec:"M", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ Sales & Marketing module साठी किती द्याल?", q_en:"⭐ Monthly WTP for Sales & Marketing module?",
       options:[
         {mr:"वेगळे नाही", en:"Won't pay separately"},
@@ -547,7 +547,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── M6 HR & PAYROLL (4 Q) ─────────
-    {id:"M6-1", sec:"M", role:"O", type:"multi", max:3, required:true,
+    {id:"M6-1", sec:"M", role:"O", type:"multi", max:3, required:false,
       q_mr:"HR मध्ये कोणती 3 features हवीत?", q_en:"Top 3 HR & payroll features?",
       options:[
         {mr:"हजेरी (face / biometric)", en:"Attendance (face / biometric)"},
@@ -556,7 +556,7 @@ const QUESTIONS_DATA = {
         {mr:"ECR + Form 16 / 24Q auto", en:"ECR + Form 16 / 24Q auto"},
         {mr:"Skill matrix + training", en:"Skill matrix + training"}
       ]},
-    {id:"M6-2", sec:"M", role:"O", type:"single", required:true,
+    {id:"M6-2", sec:"M", role:"O", type:"single", required:false,
       q_mr:"Payroll आज कसे करता?", q_en:"How do you do payroll today?",
       options:[
         {mr:"हाताने / Excel", en:"Manually / Excel"},
@@ -565,7 +565,7 @@ const QUESTIONS_DATA = {
         {mr:"वेगळे payroll software", en:"Separate payroll software"},
         {mr:"ठरलेली पद्धत नाही", en:"No fixed method"}
       ]},
-    {id:"M6-3", sec:"M", role:"O", type:"single", required:true,
+    {id:"M6-3", sec:"M", role:"O", type:"single", required:false,
       q_mr:"कोणते Digital Tool insight उपयोगी? (HR)", q_en:"Most useful Digital Tool insight in HR?",
       options:[
         {mr:"गैरहजेरीचा production वर परिणाम", en:"Absence impact on production"},
@@ -574,7 +574,7 @@ const QUESTIONS_DATA = {
         {mr:"compliance deadline (PF / ESIC)", en:"Compliance deadline (PF / ESIC)"},
         {mr:"attrition धोका", en:"Attrition risk"}
       ]},
-    {id:"M6-4", sec:"M", role:"O", type:"single", required:true, decisive:true,
+    {id:"M6-4", sec:"M", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ HR module साठी किती द्याल?", q_en:"⭐ Monthly WTP for HR module?",
       options:[
         {mr:"वेगळे नाही", en:"Won't pay separately"},
@@ -585,7 +585,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── SECTION E — DIGITAL BUSINESS MANAGER (8 Q) ─────────
-    {id:"E1", sec:"E", role:"A", type:"single", required:true, decisive:true,
+    {id:"E1", sec:"E", role:"A", type:"single", required:false, decisive:true,
       q_mr:"⭐ Digital Business Manager — किती आकर्षक वाटते?", q_en:"⭐ The Digital Business Manager idea — how appealing is it?",
       help_mr:"एक Digital Tool जो तुमच्या सगळ्या modules मधील माहिती बघून — प्रश्नांची उत्तरे देतो (ASSIST), अडचणीत मार्ग दाखवतो (NAVIGATE), सुधारणा सुचवतो (SUGGEST), आणि धोक्याचा आधीच इशारा देतो (ALERT).",
       help_en:"A Digital Tool that reads across all your modules to answer questions (ASSIST), guide you through problems (NAVIGATE), suggest improvements (SUGGEST), and warn of risks early (ALERT).",
@@ -596,7 +596,7 @@ const QUESTIONS_DATA = {
         {mr:"खात्री नाही", en:"Not sure"},
         {mr:"गरज वाटत नाही", en:"Don't see the need"}
       ]},
-    {id:"E2", sec:"E", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"E2", sec:"E", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ Digital Tool च्या 4 कामांपैकी कोणते सर्वात महत्त्वाचे?", q_en:"⭐ Of the Digital Tool's 4 jobs, which matters MOST to you?",
       options:[
         {mr:"उत्तर देणे (ASSIST) — प्रश्न विचारतो", en:"ASSIST — answer my questions"},
@@ -605,7 +605,7 @@ const QUESTIONS_DATA = {
         {mr:"इशारा (ALERT) — धोका आधीच", en:"ALERT — warn me of risk early"},
         {mr:"सर्व सारखेच", en:"All equally"}
       ]},
-    {id:"E3", sec:"E", role:"O", type:"multi", max:3, required:true,
+    {id:"E3", sec:"E", role:"O", type:"multi", max:3, required:false,
       q_mr:"Digital Tool ने कोणत्या गोष्टींवर इशारा द्यावा? (टॉप 3)", q_en:"What should the Digital Tool ALERT you about? (pick top 3)",
       options:[
         {mr:"Cash कमी पडण्याचा धोका", en:"Cash shortage risk"},
@@ -615,7 +615,7 @@ const QUESTIONS_DATA = {
         {mr:"Quality / defect वाढ", en:"Quality / defect spike"},
         {mr:"इतर (नमूद करा)", en:"Other (specify)"}
       ]},
-    {id:"E4", sec:"E", role:"O", type:"multi", max:3, required:true,
+    {id:"E4", sec:"E", role:"O", type:"multi", max:3, required:false,
       q_mr:"Digital Tool ने रोज सकाळी काय सांगावे? (टॉप 3)", q_en:"What should the Digital Tool tell you every morning? (pick top 3)",
       options:[
         {mr:"आजच्या top 3 गोष्टी", en:"Today's top 3 priorities"},
@@ -624,7 +624,7 @@ const QUESTIONS_DATA = {
         {mr:"कालचे problems", en:"Yesterday's problems"},
         {mr:"आजचे deadline / अलर्ट", en:"Today's deadlines / alerts"}
       ]},
-    {id:"E5", sec:"E", role:"O", type:"single", required:true,
+    {id:"E5", sec:"E", role:"O", type:"single", required:false,
       q_mr:"Digital Tool ला बोलून प्रश्न विचाराल का?", q_en:"Would you ask the Digital Tool questions by voice?",
       options:[
         {mr:"हो — रोज अनेक वेळा", en:"Yes — many times a day"},
@@ -633,7 +633,7 @@ const QUESTIONS_DATA = {
         {mr:"दुसरे कोणी वापरेल", en:"Someone else will use it"},
         {mr:"नाही", en:"No"}
       ]},
-    {id:"E6", sec:"E", role:"O,M", type:"single", required:true, decisive:true,
+    {id:"E6", sec:"E", role:"O,M", type:"single", required:false, decisive:true,
       q_mr:"⭐ Digital Tool चा सल्ला तुम्ही किती विश्वासाने वापराल?", q_en:"⭐ How much would you trust the Digital Tool's advice?",
       options:[
         {mr:"पूर्ण — कृती करेन", en:"Fully — will act on it"},
@@ -642,7 +642,7 @@ const QUESTIONS_DATA = {
         {mr:"साशंक राहीन", en:"Will stay skeptical"},
         {mr:"माहीत नाही", en:"Don't know"}
       ]},
-    {id:"E7", sec:"E", role:"O", type:"single", required:true, decisive:true,
+    {id:"E7", sec:"E", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ Digital Tool रोज वापराल का (6 महिने)?", q_en:"⭐ Would you USE the Digital Tool daily for 6 months?",
       options:[
         {mr:"नक्की — आजच sign करेन", en:"Definitely — sign today"},
@@ -651,7 +651,7 @@ const QUESTIONS_DATA = {
         {mr:"बहुधा नाही", en:"Probably not"},
         {mr:"नाही", en:"No"}
       ]},
-    {id:"E8", sec:"E", role:"O", type:"single", required:true, decisive:true,
+    {id:"E8", sec:"E", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ Digital Manager साठी वेगळे पैसे द्याल का?", q_en:"⭐ Would you pay extra specifically for the Digital Manager?",
       options:[
         {mr:"हो — Rs 500+/महिना", en:"Yes — Rs 500+/month extra"},
@@ -662,7 +662,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── SECTION F — GTM & ACQUISITION (5 Q) ─────────
-    {id:"F1", sec:"F", role:"O", type:"single", required:true, decisive:true,
+    {id:"F1", sec:"F", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ अशा tool बद्दल तुम्ही कुठून ऐकाल / विश्वास ठेवाल?", q_en:"⭐ Where would you hear about / trust such a tool?",
       options:[
         {mr:"दुसरा MSME मालक (ओळखीचा)", en:"Another MSME owner I know"},
@@ -671,7 +671,7 @@ const QUESTIONS_DATA = {
         {mr:"WhatsApp / YouTube / social", en:"WhatsApp / YouTube / social"},
         {mr:"CA / consultant", en:"CA / consultant"}
       ]},
-    {id:"F2", sec:"F", role:"O", type:"single", required:true, decisive:true,
+    {id:"F2", sec:"F", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ नवीन MSME मित्राला तुम्ही शिफारस कराल का?", q_en:"⭐ Would you recommend a good tool to another MSME owner?",
       options:[
         {mr:"हो — लगेच सांगेन", en:"Yes — actively tell others"},
@@ -680,7 +680,7 @@ const QUESTIONS_DATA = {
         {mr:"बहुधा नाही", en:"Probably not"},
         {mr:"नाही", en:"No"}
       ]},
-    {id:"F3", sec:"F", role:"O,M", type:"single", required:true,
+    {id:"F3", sec:"F", role:"O,M", type:"single", required:false,
       q_mr:"सुरुवात (onboarding) कशी हवी?", q_en:"How do you want to get started (onboarding)?",
       options:[
         {mr:"स्वतः — video + WhatsApp मदत", en:"Self — videos + WhatsApp help"},
@@ -689,7 +689,7 @@ const QUESTIONS_DATA = {
         {mr:"WhatsApp वर टप्प्याटप्प्याने", en:"WhatsApp step-by-step"},
         {mr:"सर्व करून द्या (white-glove)", en:"Do it all for me"}
       ]},
-    {id:"F4", sec:"F", role:"O", type:"single", required:true,
+    {id:"F4", sec:"F", role:"O", type:"single", required:false,
       q_mr:"सुरुवातीला किती दिवसात तयार व्हायला हवे?", q_en:"How quickly must you be up and running?",
       options:[
         {mr:"1 दिवस", en:"1 day"},
@@ -698,7 +698,7 @@ const QUESTIONS_DATA = {
         {mr:"2-4 आठवडे", en:"2-4 weeks"},
         {mr:"वेळेची घाई नाही", en:"No rush"}
       ]},
-    {id:"F5", sec:"F", role:"O", type:"single", required:true, decisive:true,
+    {id:"F5", sec:"F", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ Free trial असेल तर?", q_en:"⭐ If there were a free version / trial?",
       options:[
         {mr:"लगेच सुरू करेन", en:"Would start immediately"},
@@ -709,7 +709,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── SECTION G — PRICING & PACKAGING (5 Q) ─────────
-    {id:"G1", sec:"G", role:"O", type:"single", required:true, decisive:true,
+    {id:"G1", sec:"G", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ Rs 999 मध्ये 3 module + Digital Tool + 4 user — कसे वाटते?", q_en:"⭐ Rs 999/mo for 3 modules + Digital Manager + 4 users — how does this feel?",
       help_mr:"आपली योजना: Free = 1 module + 1 user (Digital Tool नाही); Rs 999 = 3 modules + Digital Manager + 4 users; Rs 1,999 = सर्व 6 modules + Digital Tool + 7 users.",
       help_en:"Our plan: Free = 1 module + 1 user (no Digital Tool); Rs 999 = 3 modules + Digital Manager + 4 users; Rs 1,999 = all 6 modules + Digital Tool + 7 users.",
@@ -720,7 +720,7 @@ const QUESTIONS_DATA = {
         {mr:"महाग", en:"Expensive"},
         {mr:"खूप महाग", en:"Too expensive"}
       ]},
-    {id:"G2", sec:"G", role:"O", type:"single", required:true, decisive:true,
+    {id:"G2", sec:"G", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ सर्व 6 module + Digital Tool + 7 user साठी Rs 1,999 — कसे?", q_en:"⭐ Rs 1,999/mo for all 6 modules + Digital Tool + 7 users — how does this feel?",
       options:[
         {mr:"स्वस्त", en:"Cheap"},
@@ -729,7 +729,7 @@ const QUESTIONS_DATA = {
         {mr:"महाग", en:"Expensive"},
         {mr:"खूप महाग", en:"Too expensive"}
       ]},
-    {id:"G3", sec:"G", role:"O", type:"single", required:true, decisive:true,
+    {id:"G3", sec:"G", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ तुम्ही बहुधा कोणती योजना घ्याल?", q_en:"⭐ Which plan would you most likely choose?",
       options:[
         {mr:"Free (1 module)", en:"Free (1 module)"},
@@ -738,7 +738,7 @@ const QUESTIONS_DATA = {
         {mr:"आधी free, मग ठरवेन", en:"Free first, then decide"},
         {mr:"काहीच नाही", en:"None"}
       ]},
-    {id:"G4", sec:"G", role:"O", type:"single", required:true, decisive:true,
+    {id:"G4", sec:"G", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ Free मध्ये Digital Manager नाही — यामुळे upgrade कराल?", q_en:"⭐ Free has NO Digital Manager — would that make you upgrade to paid?",
       options:[
         {mr:"हो — Digital Tool साठी नक्की upgrade", en:"Yes — would upgrade for the Digital Tool"},
@@ -747,7 +747,7 @@ const QUESTIONS_DATA = {
         {mr:"नाही — free पुरेसे", en:"No — free is enough"},
         {mr:"माहीत नाही", en:"Don't know"}
       ]},
-    {id:"G5", sec:"G", role:"O", type:"single", required:true,
+    {id:"G5", sec:"G", role:"O", type:"single", required:false,
       q_mr:"किती लवकर पैसे वसूल (ROI) व्हायला हवे?", q_en:"How fast must the tool pay for itself?",
       options:[
         {mr:"1 महिन्यात", en:"Within 1 month"},
@@ -758,7 +758,7 @@ const QUESTIONS_DATA = {
       ]},
 
     // ───────── SECTION H — PRODUCT-MARKET FIT (4 Q) ─────────
-    {id:"H1", sec:"H", role:"A", type:"single", required:true, decisive:true,
+    {id:"H1", sec:"H", role:"A", type:"single", required:false, decisive:true,
       q_mr:"⭐ हा tool उद्या बंद झाला तर तुम्हाला कसे वाटेल?", q_en:"⭐ If this tool stopped existing tomorrow, how would you feel?",
       help_mr:"हाच एक प्रश्न PMF आहे की नाही ठरवतो. प्रामाणिक उत्तर द्या.",
       help_en:"This one question decides PMF. Please answer honestly.",
@@ -769,7 +769,7 @@ const QUESTIONS_DATA = {
         {mr:"4 — खूप वाईट", en:"4 — Very bad"},
         {mr:"5 — मोठा त्रास होईल", en:"5 — Devastated"}
       ]},
-    {id:"H2", sec:"H", role:"O", type:"single", required:true, decisive:true,
+    {id:"H2", sec:"H", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ 30 दिवसांत हा tool घ्याल का?", q_en:"⭐ Would you buy this tool within 30 days?",
       options:[
         {mr:"नक्की हो", en:"Definitely yes"},
@@ -778,7 +778,7 @@ const QUESTIONS_DATA = {
         {mr:"बहुधा नाही", en:"Probably not"},
         {mr:"नाही", en:"No"}
       ]},
-    {id:"H3", sec:"H", role:"O", type:"single", required:true, decisive:true,
+    {id:"H3", sec:"H", role:"O", type:"single", required:false, decisive:true,
       q_mr:"⭐ एक feature जे असेल तरच घ्याल — कोणते?", q_en:"⭐ ONE feature that is a must-have for you to buy — which?",
       options:[
         {mr:"Digital Business Manager", en:"Digital Business Manager"},
